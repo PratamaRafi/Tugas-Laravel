@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Latihan DOM</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script defer src="https://use.fontawesome.com/releases/v5.8.1/js/all.js" integrity="sha384-g5uSoOSBd7KkhAMlnQILrecXvzst9TdC09/VM+pjDTCM+1il8RHz5fKANTFFb+gQ" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar navbar-light bg-light">
+            <a class="navbar-brand">Mini Ecommerce</a>
+            <form class="form-inline" id="formItem">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search"  id="keyword" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="searchItem">Search</button>
+            </form>
+           <span>
+               <button class="btn btn-primary" id="cart"><i class="fas fa-shopping-cart"></i>(<span id="nilaiCart">0</span>)</span></button>
+        </span>
+               
+        </nav>
+        <div class="row mt-2" id="listBarang">
+            
+        </div>
+    </div>
+
+    <script>
+        // release 0
+        var items = [
+            ['001', 'Keyboard Logitek', 60000, 'Keyboard yang mantap untuk kantoran', 'logitek.jpg'], 
+            ['002', 'Keyboard MSI', 300000, 'Keyboard gaming MSI mekanik', 'msi.jpg'],
+            ['003', 'Mouse Genius', 50000, 'Mouse Genius biar lebih pinter', 'genius.jpeg'],
+            ['004', 'Mouse Jerry', 30000, 'Mouse yang disukai kucing', 'jerry.jpg']
+        ]
+
+        function cariBarang(barang){
+
+        var produk = "";
+        for(var i = 0; i < barang.length; i++){
+            produk += `
+                <div class="col-md-4 col-lg-4 col-s-6 p-2">
+                <div class="card" style="width: 18rem;">
+                    <img src="img/${barang[i][4]}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title" id="itemName">${barang[i][1]}</h5>
+                        <p class="card-text" id="itemDesc">${barang[i][3]}</p>
+                        <p class="card-text">${barang[i][2]}</p>
+                        <a href="#"; class="btn btn-primary" id="addCart">Tambahkan ke keranjang</a>
+                    </div>
+                </div>
+                </div>`
+         }
+        var listBarang = document.getElementById("listBarang")
+        listBarang.innerHTML = produk
+         return produk;
+        }
+        cariBarang(items)
+
+
+        // release 1(search)
+
+        var formItem = document.getElementById("formItem")
+        formItem.addEventListener("submit", function (e) {
+            e.preventDefault()
+
+            // get keyword
+            var keyword = document.getElementById("keyword").value
+       
+            // filter
+            var filterItems = []
+            for(var j = 0; j < items.length; j++){
+                if(items[j][1].toLowerCase().includes(keyword.toLowerCase())) {
+                    filterItems.push(items[j])
+                }
+            }
+            cariBarang(filterItems)
+        })
+
+        // release 2(Tamnbah Belanjaan)
+        document.addEventListener("click",function(e){
+            if(e.target && e.target.id == "addCart"){
+                var naik = 1
+        
+                var add = parseInt(document.getElementById("nilaiCart").innerHTML);
+                document.getElementById("nilaiCart").innerHTML = add + 1;
+                
+            }
+                   
+                    
+        });
+
+    </script>
+
+    <script src="jquery/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
